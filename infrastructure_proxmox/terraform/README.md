@@ -10,5 +10,5 @@ _Описание содержимого:_
 
 - main.tf - файл сборки terraform
 - variables.tf - файл переменных terraform, конфигурация создаваемых виртуальных машин описана тут же
-- cloud-init-configs - сожержит шаблон настроек cloud-init образа
+- cloud-init-configs - сожержит шаблон настроек cloud-init образа для создаваемых виртуальных машин из terraform
 - destroy_infrastructure - содержит pipeline Jenkins для уничтожения созданной инфраструктуры
