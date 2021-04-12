@@ -1,1 +1,2 @@
 infrastructure_proxmox/.Jenkinsfile.config.json
+infrastructure_proxmox/terraform/destroy_infrastructure/.Jenkinsfile.config.json
