@@ -4,4 +4,11 @@
 
 - [Proxmox ](https://registry.terraform.io/providers/Telmate/proxmox/latest) - провайдер Terraform
 
-- [cloud-init](https://cloud-init.io/) - используется для конфигурирования cloud-init образа Ubuntu 18.04 из конфигурационного файла каталога cloud-init-config
+- [cloud-init](https://cloud-init.io/) - cloud-init образ Ubuntu 18.04
+
+_Описание содержимого:_
+
+- main.tf - файл сборки terraform
+- variables.tf - файл переменных terraform, конфигурация создаваемых виртуальных машин описана тут же.
+- cloud-init-configs - сожержит шаблон + создаваемые конфигурационные файлы cloud-init образов виртуальных
+- infrastructure_proxmox/terraform/destroy_infrastructure - содержит pipeline Jenkins для уничтожения созданной инфраструктуры
