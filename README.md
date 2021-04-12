@@ -11,7 +11,7 @@ _Второй этап:_
 Подготовить кластре [Kubernetes](https://kubernetes.io/ru/docs/concepts/overview/what-is-kubernetes/) к работе на "bare matel" используя для этого следующее ПО:
 - [MetalLLB](https://metallb.universe.tf/) для  [LoadBalancer](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/)
 - [Nginx ingress controllers](https://kubernetes.github.io/ingress-nginx/) для [Ingress-controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
-- [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner) для [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
+- [NFS-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner) для [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
 
 Мониторинг [Kubernetes](https://kubernetes.io/ru/docs/concepts/overview/what-is-kubernetes/) реализовать на базе связки [Prometheus](https://prometheus.io)+[Grafana](https://grafana.com/), работающими в кластере при помощи: 
 - [Prometheus-operator](https://github.com/prometheus-operator/prometheus-operator)
