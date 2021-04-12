@@ -4,7 +4,7 @@
 
 - [Proxmox ](https://registry.terraform.io/providers/Telmate/proxmox/latest) - провайдер Terraform
 
-- [cloud-init](https://cloud-init.io/) - cloud-init образ Ubuntu 18.04
+- [Cloud-init]https://cloud-images.ubuntu.com/focal/current/) - cloud-init образ Ubuntu 20.04
 
 _Описание содержимого:_
 
