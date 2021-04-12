@@ -8,7 +8,7 @@ _Первый этап:_
 
 _Второй этап:_
 
-Подготовить кластре [Kubernetes](https://kubernetes.io/ru/docs/concepts/overview/what-is-kubernetes/) к работе на bare matel используя для этого следующее ПО:
+Подготовить кластре [Kubernetes](https://kubernetes.io/ru/docs/concepts/overview/what-is-kubernetes/) к работе на "bare matel" используя для этого следующее ПО:
 - [MetalLLB](https://metallb.universe.tf/) для  [LoadBalancer](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/)
 - [Nginx ingress controllers](https://kubernetes.github.io/ingress-nginx/) для [Ingress-controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
 
