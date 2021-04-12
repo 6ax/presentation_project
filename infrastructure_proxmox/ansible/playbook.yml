@@ -1,0 +1,144 @@
+---
+- name: 
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Tasks for all nodes
+      block:
+  
+      - name: Disable SWAP
+        command:
+          cmd: swapoff -a
+
+      - name: Remove Swap from fstab
+        mount:
+          name: swap
+          fstype: swap
+          state: absent
+
+      - name: Stop and Disable firewall
+        ufw:
+          state: disabled
+          policy: allow
+
+      - name: Enable and Load Kernel modules
+        modprobe:
+          name: "{{ item }}"
+          state: present
+        loop:
+          - overlay
+          - br_netfilter
+
+      - name: Set system setings
+        sysctl:
+          name: "{{ item }}"
+          value: '1'
+          state: present
+        loop:
+         - net.bridge.bridge-nf-call-ip6tables
+         - net.bridge.bridge-nf-call-iptables
+         - net.ipv4.ip_forward
+
+      - name: Add Kubernetes Repository Signing Key
+        apt_key:
+          url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+          state: present
+
+      - name: Add Kubernetes Repository
+        apt_repository:
+          repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+          state: present
+
+      - name: Install a Kubernetes packages
+        apt:
+          pkg:
+            - kubeadm
+            - kubelet
+            - kubectl
+            - containerd
+
+      - name: Create /etc/containerd directory
+        file:
+          path: /etc/containerd
+          state: directory
+
+      - name: Install containerd runtime
+        shell:
+          cmd: containerd config default > /etc/containerd/config.toml
+        args:
+          executable: /bin/bash
+
+      - name: Modify /etc/containerd/config.toml
+        lineinfile:
+          path: /etc/containerd/config.toml
+          insertafter: '^\s+\[plugins\."io\.containerd\.grpc\.v1\.cri"\.containerd\.runtimes\.runc\]'
+          line: '          SystemdCgroup = true'
+
+      - name: Prevent Kubernetes packages from being upgraded
+        dpkg_selections:
+          name: "{{ item }}"
+          selection: hold
+        loop:
+          - kubeadm
+          - kubelet
+          - kubectl
+
+      - name: Start & Enable containerd service
+        systemd:
+          name: containerd
+          state: restarted
+          enabled: yes
+          
+      tags: [always]
+
+    - name: Tasks for MasterNode nodes
+      block:  
+        - name:  Initialize Kubernetes on Master Node
+          command: "kubeadm init --pod-network-cidr=10.244.0.0/16"
+          
+        - name: Create dir for storing Kubernetes configs
+          file:
+            dest: /home/ubuntu/.kube
+            owner: ubuntu
+            group: ubuntu
+            state: directory
+
+        - name: Copy Kubernetes config to ubuntu user home dir
+          copy:
+            src: /etc/kubernetes/admin.conf
+            dest: /home/ubuntu/.kube/config
+            owner: ubuntu
+            group: ubuntu
+            mode: "0600"
+            remote_src: yes
+          
+        - name:  Initialize Kubernetes on Master Node
+          command: "kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+          
+        - name: Generate join command
+          command: kubeadm token create --print-join-command
+          register: join_command
+
+        - name: Copy join command to local file
+          local_action: 
+            module: copy 
+            content: "{{ join_command.stdout_lines[0] }}" 
+            dest: "./join-command"
+          become: no
+
+      tags: [K8sMaster]
+
+    - name: Tasks for WorkerNode nodes
+      block:
+        - name: Copy the join command to server location
+          copy: 
+            src: join-command 
+            dest: /tmp/join-command.sh 
+            mode: 0777
+
+        - name: Join the node to cluster
+          command: sh /tmp/join-command.sh
+
+      tags: [K8sWorker]
