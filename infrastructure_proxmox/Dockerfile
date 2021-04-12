@@ -17,3 +17,4 @@ RUN apt-get update && apt-get install terraform
 #Run Jenkins
 USER jenkins
 RUN jenkins-plugin-cli --plugins "blueocean:1.24.5 docker-workflow:1.26 ansible:1.1 terraform:1.0.10 ssh-agent:1.22"
+
