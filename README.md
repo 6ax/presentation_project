@@ -12,5 +12,5 @@ _Второй этап:_
 - [MetalLLB](https://metallb.universe.tf/) для  [LoadBalancer](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/)
 - [Nginx ingress controllers](https://kubernetes.github.io/ingress-nginx/) для [Ingress-controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
 
-Мониторинг [Kubernetes](https://kubernetes.io/ru/docs/concepts/overview/what-is-kubernetes/) реализовать на базе связки [Prometheus](https://prometheus.io)+ [Grafana](https://grafana.com/) работающими в кластере при помощи: 
+Мониторинг [Kubernetes](https://kubernetes.io/ru/docs/concepts/overview/what-is-kubernetes/) реализовать на базе связки [Prometheus](https://prometheus.io)+[Grafana](https://grafana.com/) работающими в кластере при помощи: 
 - [Prometheus-operator](https://github.com/prometheus-operator/prometheus-operator)
