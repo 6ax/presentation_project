@@ -1,6 +1,6 @@
 ## Terraform
 
-Для создания виртуальных машин используем:
+Для создания виртуальных машин используем в облаке Proxmox:
 
 - [Proxmox ](https://registry.terraform.io/providers/Telmate/proxmox/latest) - провайдер Terraform
 
