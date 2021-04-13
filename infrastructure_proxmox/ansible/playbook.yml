@@ -54,6 +54,7 @@
       - name: Install a Kubernetes packages
         apt:
           pkg:
+            - nfs-common
             - kubeadm
             - kubelet
             - kubectl
